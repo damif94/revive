@@ -4,7 +4,7 @@ import (
 	"go/ast"
 	"strings"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // BlankImportsRule lints given else constructs.

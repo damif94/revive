@@ -3,7 +3,7 @@ package formatter
 import (
 	"fmt"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // Plain is an implementation of the Formatter interface

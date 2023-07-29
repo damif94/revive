@@ -5,7 +5,7 @@ import (
 	"go/ast"
 	"go/types"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // ContextKeysType lints given else constructs.

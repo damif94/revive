@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
-	"github.com/mgechev/revive/internal/typeparams"
-	"github.com/mgechev/revive/rule"
+	"github.com/damif94/revive/internal/typeparams"
+	"github.com/damif94/revive/rule"
 )
 
 func TestReceiverNamingTypeParams(t *testing.T) {

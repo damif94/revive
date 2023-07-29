@@ -5,8 +5,8 @@ import (
 	"go/ast"
 	"go/types"
 
-	"github.com/mgechev/revive/internal/typeparams"
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/internal/typeparams"
+	"github.com/damif94/revive/lint"
 )
 
 // UnexportedReturnRule lints given else constructs.

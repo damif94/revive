@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/mgechev/revive/rule"
+	"github.com/damif94/revive/rule"
 )
 
 func TestUnusedParam(t *testing.T) {

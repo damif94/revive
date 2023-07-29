@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // ContextAsArgumentRule lints given else constructs.

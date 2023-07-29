@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/damif94/revive/config"
+	"github.com/damif94/revive/lint"
+	"github.com/damif94/revive/logging"
 	"github.com/mgechev/dots"
-	"github.com/mgechev/revive/config"
-	"github.com/mgechev/revive/lint"
-	"github.com/mgechev/revive/logging"
 	"github.com/pkg/errors"
 )
 

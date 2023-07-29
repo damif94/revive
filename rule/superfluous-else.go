@@ -2,8 +2,8 @@ package rule
 
 import (
 	"fmt"
-	"github.com/mgechev/revive/internal/ifelse"
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/internal/ifelse"
+	"github.com/damif94/revive/lint"
 )
 
 // SuperfluousElseRule lints given else constructs.

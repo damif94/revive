@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // FunctionLength lint.

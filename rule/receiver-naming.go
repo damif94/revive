@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"go/ast"
 
-	"github.com/mgechev/revive/internal/typeparams"
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/internal/typeparams"
+	"github.com/damif94/revive/lint"
 )
 
 // ReceiverNamingRule lints given else constructs.

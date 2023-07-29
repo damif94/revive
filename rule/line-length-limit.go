@@ -9,7 +9,7 @@ import (
 	"sync"
 	"unicode/utf8"
 
-	"github.com/mgechev/revive/lint"
+	"github.com/damif94/revive/lint"
 )
 
 // LineLengthLimitRule lints given else constructs.

@@ -8,9 +8,9 @@ import (
 	"runtime/debug"
 	"strings"
 
+	"github.com/damif94/revive/config"
+	"github.com/damif94/revive/revivelib"
 	"github.com/fatih/color"
-	"github.com/mgechev/revive/config"
-	"github.com/mgechev/revive/revivelib"
 	"github.com/mitchellh/go-homedir"
 )
 

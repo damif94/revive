@@ -7,7 +7,7 @@ import (
 	"go/types"
 	"sync"
 
-	"github.com/mgechev/revive/internal/typeparams"
+	"github.com/damif94/revive/internal/typeparams"
 )
 
 // Package represents a package in the project.

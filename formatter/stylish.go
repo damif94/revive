@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"fmt"
 
+	"github.com/damif94/revive/lint"
 	"github.com/fatih/color"
-	"github.com/mgechev/revive/lint"
 	"github.com/olekukonko/tablewriter"
 )
 
