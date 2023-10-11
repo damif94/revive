@@ -105,7 +105,7 @@ func (w lintAddConstantRule) checkFunc(expr *ast.CallExpr) {
 	}
 }
 
-func (w lintAddConstantRule) getFuncName(expr *ast.CallExpr) string {
+func (lintAddConstantRule) getFuncName(expr *ast.CallExpr) string {
 	switch f := expr.Fun.(type) {
 	case *ast.SelectorExpr:
 		switch prefix := f.X.(type) {
@@ -179,7 +179,7 @@ func (r *AddConstantRule) configure(arguments lint.Arguments) {
 		r.strLitLimit = defaultStrLitLimit
 		r.whiteList = newWhiteList()
 		if len(arguments) > 0 {
-			args, ok := arguments[0].(map[string]interface{})
+			args, ok := arguments[0].(map[string]any)
 			if !ok {
 				panic(fmt.Sprintf("Invalid argument to the add-constant rule. Expecting a k,v map, got %T", arguments[0]))
 			}

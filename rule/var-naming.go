@@ -44,14 +44,14 @@ func (r *VarNamingRule) configure(arguments lint.Arguments) {
 	if len(arguments) >= 3 {
 		// not pretty code because should keep compatibility with TOML (no mixed array types) and new map parameters
 		thirdArgument := arguments[2]
-		asSlice, ok := thirdArgument.([]interface{})
+		asSlice, ok := thirdArgument.([]any)
 		if !ok {
 			panic(fmt.Sprintf("Invalid third argument to the var-naming rule. Expecting a %s of type slice, got %T", "options", arguments[2]))
 		}
 		if len(asSlice) != 1 {
 			panic(fmt.Sprintf("Invalid third argument to the var-naming rule. Expecting a %s of type slice, of len==1, but %d", "options", len(asSlice)))
 		}
-		args, ok := asSlice[0].(map[string]interface{})
+		args, ok := asSlice[0].(map[string]any)
 		if !ok {
 			panic(fmt.Sprintf("Invalid third argument to the var-naming rule. Expecting a %s of type slice, of len==1, with map, but %T", "options", asSlice[0]))
 		}
@@ -140,15 +140,6 @@ func (w *lintNames) check(id *ast.Ident, thing string) {
 			Category:   "naming",
 		})
 		return
-	}
-	if len(id.Name) > 2 && id.Name[0] == 'k' && id.Name[1] >= 'A' && id.Name[1] <= 'Z' {
-		should := string(id.Name[1]+'a'-'A') + id.Name[2:]
-		w.onFailure(lint.Failure{
-			Failure:    fmt.Sprintf("don't use leading k in Go names; %s %s should be %s", thing, id.Name, should),
-			Confidence: 0.8,
-			Node:       id,
-			Category:   "naming",
-		})
 	}
 
 	should := lint.Name(id.Name, w.whitelist, w.blacklist)
@@ -264,8 +255,8 @@ func (w *lintNames) Visit(n ast.Node) ast.Visitor {
 	return w
 }
 
-func getList(arg interface{}, argName string) []string {
-	temp, ok := arg.([]interface{})
+func getList(arg any, argName string) []string {
+	temp, ok := arg.([]any)
 	if !ok {
 		panic(fmt.Sprintf("Invalid argument to the var-naming rule. Expecting a %s of type slice with initialisms, got %T", argName, arg))
 	}
