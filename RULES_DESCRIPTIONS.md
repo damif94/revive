@@ -33,7 +33,7 @@ List of all available rules.
   - [error-naming](#error-naming)
   - [error-return](#error-return)
   - [error-strings](#error-strings)
-  - [errorf](#errorf)  
+  - [errorf](#errorf)
   - [exported](#exported)
   - [file-header](#file-header)
   - [flag-parameter](#flag-parameter)
@@ -48,6 +48,7 @@ List of all available rules.
   - [increment-decrement](#increment-decrement)
   - [indent-error-flow](#indent-error-flow)
   - [line-length-limit](#line-length-limit)
+  - [max-control-nesting](#max-control-nesting)
   - [max-public-structs](#max-public-structs)
   - [modifies-parameter](#modifies-parameter)
   - [modifies-value-receiver](#modifies-value-receiver)
@@ -282,7 +283,17 @@ _Description_: Importing with `.` makes the programs much harder to understand b
 
 More information [here](https://github.com/golang/go/wiki/CodeReviewComments#import-dot)
 
-_Configuration_: N/A
+_Configuration_:
+
+* `allowedPackages`: (list of strings) comma-separated list of allowed dot import packages
+
+Example:
+
+```toml
+[rule.dot-imports]
+  arguments = [{ allowedPackages = ["github.com/onsi/ginkgo/v2","github.com/onsi/gomega"] }]
+```
+
 
 ## duplicated-imports
 
@@ -375,6 +386,44 @@ Example:
 [rule.enforce-map-style]
   arguments = ["make"]
 ```
+
+
+## enforce-repeated-arg-type-style
+
+**Description**: This rule is designed to maintain consistency in the declaration
+of repeated argument and return value types in Go functions. It supports three styles:
+'any', 'short', and 'full'. The 'any' style is lenient and allows any form of type
+declaration. The 'short' style encourages omitting repeated types for conciseness,
+whereas the 'full' style mandates explicitly stating the type for each argument
+and return value, even if they are repeated, promoting clarity.
+
+**Configuration (1)**: (string) as a single string, it configures both argument
+and return value styles. Accepts 'any', 'short', or 'full' (default: 'any').
+
+**Configuration (2)**: (map[string]any) as a map, allows separate configuration
+for function arguments and return values. Valid keys are "funcArgStyle" and
+"funcRetValStyle", each accepting 'any', 'short', or 'full'. If a key is not
+specified, the default value of 'any' is used.
+
+**Note**: The rule applies checks based on the specified styles. For 'full' style,
+it flags instances where types are omitted in repeated arguments or return values.
+For 'short' style, it highlights opportunities to omit repeated types for brevity.
+Incorrect or unknown configuration values will result in an error.
+
+**Example (1)**:
+
+```toml
+[rule.enforce-repeated-arg-type-style]
+arguments = ["short"]
+```
+
+**Example (2):**
+
+```toml
+[rule.enforce-repeated-arg-type-style]
+arguments = [ { funcArgStyle = "full", funcRetValStyle = "short" } ]
+```
+
 
 ## enforce-slice-style
 
@@ -489,13 +538,28 @@ _Description_: Aligns with Go's naming conventions, as outlined in the official
 the principles of good package naming. Users can follow these guidelines by default or define a custom regex rule.
 Importantly, aliases with underscores ("_") are always allowed.
 
-_Configuration_: (string) regular expression to match the aliases (default: ^[a-z][a-z0-9]{0,}$)
+_Configuration_ (1): (string) as plain string accepts allow regexp pattern for aliases (default: ^[a-z][a-z0-9]{0,}$).
 
-Example:
+_Configuration_ (2): (map[string]string) as a map accepts two values:
+* for a key "allowRegex" accepts allow regexp pattern
+* for a key "denyRegex deny regexp pattern
+
+_Note_: If both `allowRegex` and `denyRegex` are provided, the alias must comply with both of them.
+If none are given (i.e. an empty map), the default value ^[a-z][a-z0-9]{0,}$ for allowRegex is used.
+Unknown keys will result in an error.
+
+Example (1):
 
 ```toml
 [rule.import-alias-naming]
-  arguments =["^[a-z][a-z0-9]{0,}$"]
+  arguments = ["^[a-z][a-z0-9]{0,}$"]
+```
+
+Example (2):
+
+```toml
+[rule.import-alias-naming]
+  arguments = [ { allowRegex = "^[a-z][a-z0-9]{0,}$", denyRegex = '^v\d+$' } ]
 ```
 
 ## import-shadowing
@@ -556,6 +620,19 @@ Example:
 [rule.line-length-limit]
   arguments =[80]
 ```
+
+## max-control-nesting
+_Description_: Warns if nesting level of control structures (`if-then-else`, `for`, `switch`) exceeds a given maximum.
+
+_Configuration_: (int) maximum accepted nesting level of control structures (defaults to 5)
+
+Example:
+
+```toml
+[max-control-nesting]
+  arguments =[3]
+```
+
 
 ## max-public-structs
 
@@ -851,8 +928,8 @@ _Description_: This rule warns when [initialism](https://github.com/golang/go/wi
 
 _Configuration_: This rule accepts two slices of strings and one optional slice with single map with named parameters.
 (it's due to TOML hasn't "slice of any" and we keep backward compatibility with previous config version)
-First slice is a whitelist and second one is a blacklist of initialisms. 
-In map, you can add "upperCaseConst=true" parameter to allow `UPPER_CASE` for `const` 
+First slice is a whitelist and second one is a blacklist of initialisms.
+In map, you can add "upperCaseConst=true" parameter to allow `UPPER_CASE` for `const`
 By default, the rule behaves exactly as the alternative in `golint` but optionally, you can relax it (see [golint/lint/issues/89](https://github.com/golang/lint/issues/89))
 
 Example:
@@ -860,6 +937,16 @@ Example:
 ```toml
 [rule.var-naming]
   arguments = [["ID"], ["VM"], [{upperCaseConst=true}]]
+```
+
+You can also add "skipPackageNameChecks=true" to skip package name checks.
+
+Example:
+
+
+```toml
+[rule.var-naming]
+  arguments = [[], [], [{skipPackageNameChecks=true}]]
 ```
 
 ## waitgroup-by-value

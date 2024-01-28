@@ -56,6 +56,7 @@ var allRules = append([]lint.Rule{
 	&rule.ConstantLogicalExprRule{},
 	&rule.BoolLiteralRule{},
 	&rule.ImportsBlacklistRule{},
+	&rule.ImportsBlocklistRule{},
 	&rule.FunctionResultsLimitRule{},
 	&rule.MaxPublicStructsRule{},
 	&rule.RangeValInClosureRule{},
@@ -93,6 +94,7 @@ var allRules = append([]lint.Rule{
 	&rule.ImportAliasNamingRule{},
 	&rule.EnforceMapStyleRule{},
 	&rule.EnforceSliceStyleRule{},
+	&rule.MaxControlNestingRule{},
 }, defaultRules...)
 
 var allFormatters = []lint.Formatter{
